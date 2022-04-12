@@ -7,6 +7,7 @@ import AdDisplayContextProvider from "../../context/AdDisplayContext";
 
 const MainPage = () => {
 
+
         return (
                 <div id='main-page'>
                         <Header />

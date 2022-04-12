@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useContext } from "react";
 import { getAdsToDisplay } from "../server/adManagement";
 import { AdSearchContext } from "../context/AdSearchContext";
+import axios from "axios";
 
 function useFetch(query, page) {
     const { searchContext } = useContext(AdSearchContext)
@@ -25,10 +26,15 @@ function useFetch(query, page) {
         } catch (err) {
             setError(err);
         }
-    }, [query, page]);
+    }, [page, searchContext]);
 
     useEffect(() => {
+        const source = axios.CancelToken.source()
         sendQuery(query);
+
+        return () => {
+            source.cancel()
+        }
     }, [query, sendQuery, page]);
 
     return { loading, error, list };
